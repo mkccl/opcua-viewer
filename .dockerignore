@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.github
+*.md
+.env*
+.DS_Store
+npm-debug.log*
+pnpm-debug.log*
+Dockerfile
+.dockerignore
+coverage
+pki
+certificates
