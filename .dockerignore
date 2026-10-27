@@ -12,3 +12,5 @@ Dockerfile
 coverage
 pki
 certificates
+desktop-bundle
+release

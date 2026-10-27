@@ -19,6 +19,8 @@
 
 # production
 /build
+/desktop-bundle
+/release
 
 # misc
 .DS_Store
