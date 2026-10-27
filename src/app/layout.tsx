@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OPC UA Client",
-  description: "Read-only web client for OPC UA servers",
+  title: "OPC UA Viewer",
+  description: "Read-only viewer for OPC UA servers",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

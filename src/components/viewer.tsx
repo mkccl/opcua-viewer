@@ -191,7 +191,7 @@ export function Viewer() {
     <div className="flex h-dvh flex-col bg-background text-foreground">
       <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b px-4">
         <div className="flex min-w-0 items-center gap-3">
-          <span className="font-semibold tracking-tight">OPC UA Client</span>
+          <span className="font-semibold tracking-tight">OPC UA Viewer</span>
           {session?.connected ? (
             <Badge variant="outline" className="max-w-[46vw] truncate font-mono font-normal">
               <span className="size-1.5 rounded-full bg-emerald-500" />

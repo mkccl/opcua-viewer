@@ -1,0 +1,63 @@
+appId: com.ccl.opcua-viewer
+productName: OPC UA Viewer
+executableName: opcua-viewer
+copyright: Copyright © OPC UA Viewer
+asar: true
+npmRebuild: false
+nodeGypRebuild: false
+publish: null
+
+directories:
+  output: release
+
+files:
+  - package.json
+  - electron/**/*
+  - "!electron/**/*.ts"
+  - "!node_modules/**"
+  - "!desktop-bundle/**"
+  - "!release/**"
+  - "!.next/**"
+
+extraResources:
+  # electron-builder skips a root node_modules folder. Copy it from inside
+  # the folder so the standalone server can resolve its dependencies.
+  - from: desktop-bundle
+    to: standalone
+  - from: desktop-bundle/node_modules
+    to: standalone/node_modules
+  - from: electron/icon.png
+    to: icon.png
+
+linux:
+  target:
+    - AppImage
+  category: Utility
+  icon: electron/icon.png
+  executableName: opcua-viewer
+  synopsis: Read-only OPC UA viewer
+  syncDesktopName: true
+
+win:
+  target:
+    - nsis
+  icon: electron/icon.png
+  signAndEditExecutable: true
+
+mac:
+  target:
+    - dmg
+  icon: electron/icon.png
+  category: public.app-category.utilities
+  identity: null
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: false
+
+dmg:
+  title: OPC UA Viewer
+
+artifactName: opcua-viewer-${version}-${os}-${arch}.${ext}

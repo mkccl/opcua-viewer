@@ -51,6 +51,16 @@ export type WatchItem = {
   serverTimestamp: string | null;
 };
 
+export type ConnectionProfile = {
+  id: string;
+  name: string;
+  endpointUrl: string;
+  securityMode: SecurityMode;
+  securityPolicy: SecurityPolicyName;
+  authMode: AuthMode;
+  username?: string;
+};
+
 export type SessionResponse =
   | {
       connected: true;

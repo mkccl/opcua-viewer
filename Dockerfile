@@ -4,6 +4,8 @@ RUN corepack enable && corepack prepare pnpm@10.33.4 --activate
 FROM base AS deps
 WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+# Electron is a devDependency of the desktop shell. The image only runs `next build`.
+ENV ELECTRON_SKIP_BINARY_DOWNLOAD=1
 RUN pnpm install --frozen-lockfile
 
 FROM base AS builder

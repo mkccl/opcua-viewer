@@ -139,7 +139,7 @@ export async function connect(input: unknown, previousId?: string) {
   const securityMode = messageSecurityMode(request.securityMode);
   const securityPolicy = securityPolicyUri(request.securityPolicy);
   const client = OPCUAClient.create({
-    applicationName: "Web OPC UA Client",
+    applicationName: process.env.OPCUA_APPLICATION_NAME || "Web OPC UA Client",
     applicationUri: "urn:web-opcua-client",
     endpointMustExist: false,
     securityMode,
