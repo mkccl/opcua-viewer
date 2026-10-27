@@ -172,6 +172,20 @@ export function Viewer() {
   }
 
   const watchedIds = new Set(items.map((item) => item.nodeId));
+  const watchedDetails = details
+    ? items.find((item) => item.nodeId === details.nodeId)
+    : undefined;
+  const shownDetails = details
+    ? watchedDetails
+      ? {
+          ...details,
+          value: watchedDetails.value,
+          statusCode: watchedDetails.statusCode,
+          sourceTimestamp: watchedDetails.sourceTimestamp,
+          serverTimestamp: watchedDetails.serverTimestamp,
+        }
+      : details
+    : null;
 
   return (
     <div className="flex h-dvh flex-col bg-background text-foreground">
@@ -217,7 +231,7 @@ export function Viewer() {
               </div>
             ) : null}
             <NodeDetails
-              details={details}
+              details={shownDetails}
               loading={detailsLoading}
               error={detailsError}
               watching={details ? watchedIds.has(details.nodeId) : false}
