@@ -4,8 +4,9 @@ import {
   lstatSync,
   mkdirSync,
   readdirSync,
-  realpathSync,
+  readlinkSync,
   rmSync,
+  symlinkSync,
 } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -22,39 +23,32 @@ if (!existsSync(serverJs) || !existsSync(staticDir)) {
 }
 
 rmSync(dest, { recursive: true, force: true });
-// Copy real files instead of pnpm symlinks. Installers on Windows do not keep
-// those links, and electron-builder skips a root node_modules folder unless it
-// is copied as a plain directory tree.
-copyTree(standalone, dest, realpathSync(standalone));
-copyTree(staticDir, path.join(dest, ".next", "static"), realpathSync(staticDir));
+// Keep pnpm's directory links. Next resolves packages by walking up from the
+// real package directory inside node_modules/.pnpm, so flattening those links
+// breaks the server.
+copyTree(standalone, dest);
+copyTree(staticDir, path.join(dest, ".next", "static"));
 
 const pub = path.join(root, "public");
-if (existsSync(pub)) copyTree(pub, path.join(dest, "public"), realpathSync(pub));
+if (existsSync(pub)) copyTree(pub, path.join(dest, "public"));
 
 console.log(`Prepared ${dest} (${formatMb(directorySize(dest))})`);
 
-function copyTree(src, target, sourceRoot, stack = new Set()) {
+function copyTree(src, target) {
   const stat = lstatSync(src);
   if (stat.isSymbolicLink()) {
-    let resolved;
-    try {
-      resolved = realpathSync(src);
-    } catch {
-      return;
-    }
-    if (resolved !== sourceRoot && !resolved.startsWith(sourceRoot + path.sep)) return;
-    copyTree(resolved, target, sourceRoot, stack);
+    const link = readlinkSync(src);
+    const resolved = path.resolve(path.dirname(src), link);
+    if (!existsSync(resolved)) return;
+    mkdirSync(path.dirname(target), { recursive: true });
+    symlinkSync(link, target);
     return;
   }
   if (stat.isDirectory()) {
-    const real = realpathSync(src);
-    if (stack.has(real)) return;
-    stack.add(real);
     mkdirSync(target, { recursive: true });
     for (const name of readdirSync(src)) {
-      copyTree(path.join(src, name), path.join(target, name), sourceRoot, stack);
+      copyTree(path.join(src, name), path.join(target, name));
     }
-    stack.delete(real);
     return;
   }
   mkdirSync(path.dirname(target), { recursive: true });
