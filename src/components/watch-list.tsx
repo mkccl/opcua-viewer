@@ -18,7 +18,7 @@ export function WatchList({
 }) {
 
   return (
-    <section className="flex min-h-72 min-w-0 flex-1 flex-col">
+    <section className="flex shrink-0 flex-col">
       <div className="flex h-11 shrink-0 items-center justify-between gap-3 border-b px-4">
         <div className="flex items-center gap-2">
           <h2 className="text-sm font-medium">Watch list</h2>
@@ -34,7 +34,7 @@ export function WatchList({
           No watched variables. Use Watch on a variable in the tree or the node panel.
         </p>
       ) : (
-        <div className="min-h-0 flex-1 overflow-auto">
+        <div className="max-h-64 overflow-auto">
           <table className="w-full min-w-[46rem] text-sm">
             <thead className="sticky top-0 bg-background">
               <tr className="border-b text-left text-xs text-muted-foreground">

@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { LiveCharts } from "@/components/live-charts";
 import { WatchList } from "@/components/watch-list";
 import { ApiError, api } from "@/lib/api";
 import type { NodeDetails as NodeDetailsData, SessionResponse, WatchItem } from "@/lib/types";
@@ -214,14 +215,14 @@ export function Viewer() {
           Checking session…
         </main>
       ) : session.connected ? (
-        <main className="grid min-h-0 flex-1 lg:grid-cols-[minmax(18rem,22rem)_minmax(0,1fr)]">
+        <main className="grid min-h-0 flex-1 overflow-auto lg:grid-cols-[minmax(18rem,22rem)_minmax(0,1fr)]">
           <AddressTree
             selectedNodeId={selectedNodeId}
             watchedIds={watchedIds}
             onSelect={(nodeId) => void readNode(nodeId)}
             onWatch={(nodeId) => void watch(nodeId)}
           />
-          <div className="flex min-h-0 min-w-0 flex-col">
+          <div className="flex min-h-0 min-w-0 flex-col lg:overflow-y-auto">
             {actionError ? (
               <div className="px-4 pt-4">
                 <Alert variant="destructive">
@@ -241,6 +242,7 @@ export function Viewer() {
               onWatch={(nodeId) => void watch(nodeId)}
             />
             <WatchList items={items} live={live} onRemove={(nodeId) => void unwatch(nodeId)} />
+            <LiveCharts items={items} live={live} />
           </div>
         </main>
       ) : (
