@@ -67,6 +67,12 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+  --ts-chart-1: #2563eb;
+  --ts-chart-2: #f97316;
+  --ts-chart-3: #10b981;
+  --ts-chart-4: #8b5cf6;
+  --ts-chart-5: #ec4899;
+  --ts-chart-6: #06b6d4;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
